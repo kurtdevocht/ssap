@@ -1,0 +1,20 @@
+{
+	"extensionName": "Experimenteerbordje (SSAP)",
+	"extensionPort": 15001,
+	"host": "localhost",		
+	"blockSpecs":
+	[
+		[" ", "Begin inputs te lezen", "startPolling/A0,A1,A2,A3,A4,A5,A6,A8,A10,A11,2,7"],
+		["r", "Draaiknop links (0..1023)", "A10"],
+		["r", "Draaiknop rechts (0..1023)", "A8"],
+		["r", "Lichtsensor (0..1023)", "A11"],
+		["b", "Drukknop links ingedrukt?", "~2"],
+		["b", "Drukknop rechts ingedrukt?", "~7"],
+		[" ", "Zet groene led op %n%", "setOutput/13", 100],
+		[" ", "Zet gele led op %n%", "setOutput/1", 100],
+		[" ", "Zet rode led op %n%", "setOutput/3", 100],
+		[" ", "Zet blauwe led op %n%", "setOutput/6", 100],
+		[" ", "Zet witte led op %n%", "setOutput/11", 100],
+		[" ", "Zet wijzer op %n °", "setMotor/9", 0],
+	],
+}
