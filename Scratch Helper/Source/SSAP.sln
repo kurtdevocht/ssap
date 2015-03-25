@@ -5,6 +5,20 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSAP.ScratchHelper", "SSAP.ScratchHelper\SSAP.ScratchHelper.csproj", "{33A3AD4D-D642-40D4-B8D4-E38AFBF6ED67}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{7A5628A3-3175-4AC9-AE18-DCF765BEC6D4}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitignore = ..\..\.gitignore
+		..\..\Experimenteerbordje_Extension.s2e = ..\..\Experimenteerbordje_Extension.s2e
+		..\..\README.md = ..\..\README.md
+		..\..\SSAP_demo.sb2 = ..\..\SSAP_demo.sb2
+		..\..\SSAP_Extension.s2e = ..\..\SSAP_Extension.s2e
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arduino", "Arduino", "{AB1B3EB3-6014-4469-949F-9B0B1FF1E5A4}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Arduino Sketches\SSAP\SSAP.ino = ..\..\Arduino Sketches\SSAP\SSAP.ino
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
