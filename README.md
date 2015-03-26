@@ -1,7 +1,11 @@
 # ssap
 Simple Serial Arduino Protocol &amp; Scratch 2 helper
 
-Tested on an Arduino Leonardo. Instructions:
+Makes it possible to control Arduino in- and outputs with Scrath 2 (offline)
+
+Tested on an Arduino Leonardo.
+
+Instructions:
 
 - Load the sketch "Arduino Sketches/SSAP/SSAP.ino" on your Arduino
 - Now you can connect with the serial port to control the in- and outputs. You could use PuTTY on windows for instance.
