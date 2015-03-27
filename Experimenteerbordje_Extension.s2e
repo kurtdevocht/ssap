@@ -16,5 +16,13 @@
 		[" ", "Zet blauwe led op %n%", "setOutput/6", 100],
 		[" ", "Zet witte led op %n%", "setOutput/11", 100],
 		[" ", "Zet wijzer op %n °", "setMotor/9", 0],
+		[" ", "Zet extra uitgang op %n%", "setOutput/5", 100],
+		["r", "Input 1 (0..1023)", "A0"],
+		["r", "Input 2 (0..1023)", "A1"],
+		["r", "Input 3 (0..1023)", "A2"],
+		["r", "Input 4 (0..1023)", "A3"],
+		["r", "Input 5 (0..1023)", "A4"],
+		["r", "Input 6 (0..1023)", "A5"],
+		["r", "Input 7 (0..1023)", "A6"],
 	],
 }
