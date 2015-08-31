@@ -1,7 +1,6 @@
 {
 	"extensionName": "SSAP",
-	"extensionPort": 15001,
-	"host": "localhost",		
+	"extensionPort": 15001,	
 	"blockSpecs":
 	[
 		[" ", "Use inputs %s", "startPolling"],

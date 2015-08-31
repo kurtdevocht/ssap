@@ -13,7 +13,7 @@ Instructions:
 Want to control the Arduino with Scratch 2 (offline)?
 (Windows only...)
 
-- Start "/Scratch Helper/Bin/SSAP.ScratchHelper.exe"
+- Start "/Scratch Helper/Bin/ssap.exe"
 - This helper application should detect the Arduino automatically
 - Start Scratch 2 (offline edition)
 - Click the "File" menu while holding the SHIFT button

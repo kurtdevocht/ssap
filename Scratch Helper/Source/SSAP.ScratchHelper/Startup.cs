@@ -26,7 +26,7 @@ namespace SSAP.ScratchHelper
 			config.MapHttpAttributeRoutes();
 			
 			// Include this line to log all http messages
-			// config.MessageHandlers.Add( new MessageLoggingHandler() );
+		   // config.MessageHandlers.Add( new MessageLoggingHandler() );
 			
 			appBuilder.UseWebApi( config );
 		}

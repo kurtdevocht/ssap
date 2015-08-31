@@ -44,7 +44,7 @@ namespace SSAP.ScratchHelper
 							var valueString = value == 0 ? "false" : "true";
 							content.Append( valueString );
 							content.Append( '\n' );
-
+                            
 							content.Append( "~" );
 							content.Append( i );
 							content.Append( " " );
@@ -65,7 +65,8 @@ namespace SSAP.ScratchHelper
 		public HttpResponseMessage StartPolling( string inputs )
 		{
 			Console.WriteLine( "StartPolling: " + inputs );
-			lock ( s_lock )
+            
+            lock ( s_lock )
 			{
 				s_pollInputs.Clear();
 
@@ -83,7 +84,7 @@ namespace SSAP.ScratchHelper
 				s_pollInputs.AddRange(
 					inputs.Split( '|' ).Where( s => !string.IsNullOrEmpty( s ) ) );
 
-				Globals.Arduino.StartPoll( s_pollInputs );
+				Globals.Arduino.StartPoll( new List<string>(s_pollInputs) );
 			}
 
 			return this.OkResponse;

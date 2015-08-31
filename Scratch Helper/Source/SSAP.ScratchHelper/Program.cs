@@ -13,8 +13,10 @@ namespace SSAP.ScratchHelper
 	{
 		static void Main( string[] args )
 		{
+			/*
 			Console.WindowWidth = 80;
 			Console.WindowHeight = 60;
+			 * */
 			Console.Clear();
 			Console.Title = "SSAP <> Scratch";
 			Console.ForegroundColor = ConsoleColor.Yellow;
@@ -59,17 +61,18 @@ namespace SSAP.ScratchHelper
 			Console.WriteLine();
 			Console.WriteLine();
 
-			string baseAddress = "http://localhost:15001/";
+            var port = 15001;
 
 			try
 			{
-				var startOptions = new StartOptions( baseAddress )
+				var startOptions = new StartOptions()
 				{
-
+                    Port = port,
+                    ServerFactory = "Nowin"
 				};
 
 				// Start OWIN host 
-				using ( var app = WebApp.Start<Startup>( url: baseAddress ) )
+				using ( var app = WebApp.Start<Startup>( startOptions ) )
 				{
 					Console.ForegroundColor = ConsoleColor.Green;
 					Console.WriteLine( "***************************************************************************" );
@@ -81,7 +84,7 @@ namespace SSAP.ScratchHelper
 					Console.WriteLine( @"     \/  \/ \___/ \___/|_| |_|\___/ \___/ \_/\_/ (_)" );
 					Console.WriteLine();
 					Console.WriteLine( "\tAll is ok!" );
-					Console.WriteLine( "\tListening on " + baseAddress.ToString() + " for Scratch requests." );
+					Console.WriteLine( "\tListening on port " + port.ToString() + " for Scratch requests." );
 					Console.WriteLine();
 					Console.WriteLine( "\tPress enter to stop..." );
 					Console.WriteLine();
@@ -95,7 +98,7 @@ namespace SSAP.ScratchHelper
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine( "***************************************************************************" );
-				Console.WriteLine( "ERROR - Cannot listen on " + baseAddress + " for Scratch requests: " + ex.Message );
+				Console.WriteLine( "ERROR - Cannot listen on port " + port + " for Scratch requests: " + ex.ToString() );
 				Console.WriteLine();
 				Console.WriteLine( "Press enter to stop..." );
 				Console.WriteLine();
@@ -112,14 +115,21 @@ namespace SSAP.ScratchHelper
 			Console.WriteLine( "Looking for Arduino's on all COM ports..." );
 			Console.WriteLine();
 
-			var arduinos =
-				SerialPort.GetPortNames().Select( p => new Arduino( p, true, true ) ).ToList(); // RTS & DTR Should be enabled for Leonardo
+            // Issue: When a "Intel Active Management Technology - SOL" COM port is available on the system,
+            // discovery doesn't seem to work when a debugger is attached
+            // (no response received from Arduino serial port if data has been sent to the Intel port)
+
+            // var arduinos = new[] { new Arduino("COM7", true, true) };
+            var arduinos =
+                SerialPort.GetPortNames()
+                .Select( p => new Arduino( p, true, true )) // RTS & DTR Should be enabled for Leonardo
+                .ToList();
 
 			foreach ( var a in arduinos )
 			{
 				Console.WriteLine( "\t" + a.ComPort + ": Wait a few seconds, I'm checking if there's an Arduino..." );
 			}
-			//var arduinos = new[]{ "COM24" }.Select( p => new Arduino( p, true, true ) ).ToList(); // RTS & DTR Should be enabled for Leonardo
+			
 			Task.WaitAll( arduinos.Select( a => a.OpenAsync() ).ToArray() );
 
 			Console.WriteLine();
@@ -159,7 +169,6 @@ namespace SSAP.ScratchHelper
 			}
 
 			Globals.Arduino = arduino;
-			//arduino.StartPoll();
 			return true;
 		}
 	}

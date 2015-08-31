@@ -80,6 +80,11 @@ namespace SSAP.ScratchHelper
 						m_serialPort.DtrEnable = m_dtr;
 						m_serialPort.RtsEnable = m_rts;
 						m_serialPort.WriteTimeout = 1000;
+                        m_serialPort.ReadTimeout = 100;
+                        m_serialPort.DataBits = 8;
+                        m_serialPort.StopBits = StopBits.One;
+                        m_serialPort.Parity = Parity.None;
+             
 						m_serialPort.Open();
 					}
 					catch ( Exception ex )
@@ -169,29 +174,38 @@ namespace SSAP.ScratchHelper
 
 		void m_serialPort_DataReceived( object sender, SerialDataReceivedEventArgs e )
 		{
-			var buffer = new char[ 1 ];
+            /*
+            if (e.EventType != SerialData.Chars)
+            {
+                return;
+            }
+			*/
 			try
-			{
-				while ( m_serialPort.Read( buffer, 0, 1 ) > 0 )
-				{
-					var c = buffer[ 0 ];
-					if ( "\r\n".Contains( c ) )
-					{
-						if ( m_responsePending.Length > 0 )
-						{
-							lock ( m_lockResponses )
-							{
-								m_responses.Enqueue( m_responsePending.ToString() );
-								m_responseReceived.Set();
-								m_responsePending.Clear();
-							}
-						}
-					}
-					else
-					{
-						m_responsePending.Append( c );
-					}
-				}
+            { 
+                lock( m_lockSerialPort )
+                {
+                    var buffer = new char[1];
+                    while (m_serialPort.Read(buffer, 0, 1) > 0)
+                    {
+                        var c = buffer[0];
+                        if ("\r\n".Contains(c))
+                        {
+                            if (m_responsePending.Length > 0)
+                            {
+                                lock (m_lockResponses)
+                                {
+                                    m_responses.Enqueue(m_responsePending.ToString());
+                                    m_responseReceived.Set();
+                                    m_responsePending.Clear();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_responsePending.Append(c);
+                        }
+                    }
+                }
 			}
 			catch
 			{
@@ -223,12 +237,13 @@ namespace SSAP.ScratchHelper
 				}
 			}
 
-			// Start a task to do the actual polling
+            // Start a task to do the actual polling
 			Task.Run(
 				() =>
 				{
 					while ( true )
 					{
+                        
 						lock ( m_lockSerialPort )
 						{
 							lock ( m_pollStringLock )
@@ -243,11 +258,13 @@ namespace SSAP.ScratchHelper
 								}
 							}
 						}
+                        
 
 						Thread.Sleep( 30 );
 					}
 				}
 			);
+
 
 			// Start a task to process the return values
 			Task.Run(
